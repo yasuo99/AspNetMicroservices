@@ -1,14 +1,12 @@
-﻿using Ordering.Domain.Common;
-using Ordering.Domain.Constants;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ordering.Domain.Entities
+namespace Basket.API.Entities
 {
-    public class Order: EntityBase
+    public class BasketCheckout
     {
         public string Username { get; set; }
         public string Email { get; set; }
@@ -26,8 +24,5 @@ namespace Ordering.Domain.Entities
         public string City { get; set; }
         public string Country { get; set; }
         public string ZipCode { get; set; }
-        public PaymentStatus Status { get; set; } = PaymentStatus.WAITING;
-
-        public PaymentMethod PaymentMethod { get; set; }
     }
 }
