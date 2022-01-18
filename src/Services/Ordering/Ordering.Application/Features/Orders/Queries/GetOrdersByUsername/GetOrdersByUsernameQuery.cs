@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MediatR;
 using Ordering.Application.Constracts.Persistence;
 using Ordering.Application.Models;
 using Ordering.Domain.Entities;
@@ -11,10 +12,10 @@ using System.Threading.Tasks;
 
 namespace Ordering.Application.Features.Orders.Queries.GetOrdersByUsername
 {
-    public record GetOrdersByUsernameQuery(string username): IRequestWrapper<List<OrderVM>>;
+    public record GetOrdersByUsernameQuery(string username): IRequest<List<OrderVM>>;
 
 
-    public class GetOrdersByUsernameQueryHandler : IHandlerWrapper<GetOrdersByUsernameQuery, List<OrderVM>>
+    public class GetOrdersByUsernameQueryHandler : IRequestHandler<GetOrdersByUsernameQuery, List<OrderVM>>
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IMapper _mapper;
@@ -23,11 +24,11 @@ namespace Ordering.Application.Features.Orders.Queries.GetOrdersByUsername
             _orderRepository = orderRepository;
             _mapper = mapper;
         }
-        public async Task<Response<List<OrderVM>>> Handle(GetOrdersByUsernameQuery request, CancellationToken cancellationToken)
+        public async Task<List<OrderVM>> Handle(GetOrdersByUsernameQuery request, CancellationToken cancellationToken)
         {
             var orders = await _orderRepository.GetOrdersByUsername(request.username);
             cancellationToken.ThrowIfCancellationRequested();
-            return Response.Ok($"Get orders of user: {request.username}", _mapper.Map<List<OrderVM>>(orders));
+            return _mapper.Map<List<OrderVM>>(orders);
         }
     }
 }

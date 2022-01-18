@@ -25,7 +25,7 @@ namespace Ordering.API.Controllers
             _mediator = mediator;
         }
         [HttpGet("{username}", Name = "GetOrders")]
-        [ProducesResponseType(typeof(Response<List<OrderVM>>), (int) HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(List<OrderVM>), (int) HttpStatusCode.OK)]
         [ProducesDefaultResponseType]
         public async Task<IActionResult> GetUserOrders(string username, CancellationToken cancellationToken)
         {
